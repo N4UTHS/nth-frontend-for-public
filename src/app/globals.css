@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, 1280px) 1fr;
+    min-height: 100vh;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
