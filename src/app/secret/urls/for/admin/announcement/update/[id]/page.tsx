@@ -4,15 +4,10 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import LoadingSpinner from '@/components/UI/Loading';
 import dynamic from 'next/dynamic';
+import { ExistingFileProps } from '@/types/Props';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
-
-interface ExistingFile {
-  name: string;
-  content: string;
-  contentType: string;
-}
 
 const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) => {
   const router = useRouter();
@@ -23,7 +18,7 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
   const [currentFileName, setCurrentFileName] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [existingFile, setExistingFile] = useState<ExistingFile | null>(null);
+  const [existingFile, setExistingFile] = useState<ExistingFileProps | null>(null);
 
   const categoryMap = useMemo(() => ({
     '사업': 'business',

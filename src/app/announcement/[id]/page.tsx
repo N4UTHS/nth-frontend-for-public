@@ -3,23 +3,12 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import LoadingSpinner from '@/components/UI/Loading';
-
-interface Announcement {
-  title: string;
-  writer: string;
-  is_updated: boolean;
-  views: number;
-  created: string;
-  main_text: string;
-  file_name?: string;
-  file?: string;
-  fileContentType?: string;
-}
+import { AnnouncementProps } from '@/types/Props';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
-async function getAnnouncement(id: string): Promise<Announcement | null> {
+async function getAnnouncement(id: string): Promise<AnnouncementProps | null> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
       cache: 'no-store',
@@ -41,7 +30,7 @@ async function getAnnouncement(id: string): Promise<Announcement | null> {
 }
 
 const AnnouncementDetailPage: React.FC<{ params: { id: string } }> = ({ params }) => {
-  const [announcement, setAnnouncement] = useState<Announcement | null>(null);
+  const [announcement, setAnnouncement] = useState<AnnouncementProps | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

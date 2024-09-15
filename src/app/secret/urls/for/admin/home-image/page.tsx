@@ -4,16 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import LoadingSpinner from '@/components/UI/Loading';
 import { useRouter } from 'next/navigation';
-
-interface Image {
-    _id: string;
-    url: string;
-}
+import { ImageProps } from '@/types/Props';
 
 const ImageManagement: React.FC = () => {
     const router = useRouter();
-    const [images, setImages] = useState<Image[]>([]);
-    const [originalImages, setOriginalImages] = useState<Image[]>([]);
+    const [images, setImages] = useState<ImageProps[]>([]);
+    const [originalImages, setOriginalImages] = useState<ImageProps[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasChanges, setHasChanges] = useState<boolean>(false);
     const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -62,7 +58,7 @@ const ImageManagement: React.FC = () => {
 
         const reader = new FileReader();
         reader.onload = (e) => {
-            const newImage: Image = {
+            const newImage: ImageProps = {
                 _id: Date.now().toString(),
                 url: e.target?.result as string,
             };

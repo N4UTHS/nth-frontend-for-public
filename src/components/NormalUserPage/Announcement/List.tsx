@@ -3,18 +3,10 @@
 import { useState, useEffect, KeyboardEvent } from 'react';
 import Link from 'next/link';
 import { FC } from 'react';
-
-interface Announcement {
-  _id: string;
-  created: string;
-  title: string;
-  writer: string;
-  category: string;
-  views: number;
-}
+import { AnnouncementForListProps } from '@/types/Props';
 
 interface AnnouncementListProps {
-  announcements: Announcement[];
+  announcements: AnnouncementForListProps[];
 }
 
 const AnnouncementList: FC<AnnouncementListProps> = ({ announcements }) => {

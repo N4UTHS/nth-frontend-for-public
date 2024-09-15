@@ -1,17 +1,8 @@
+import { SubsidiaryListProps, SubsidiaryProps } from '@/types/Props';
 import React, { useState, useCallback, useEffect } from 'react';
 
-interface Subsidiary {
-  id: string;
-  name: string;
-  explain: string;
-}
-
-interface SubsidiaryListProps {
-  subsidiaries: Subsidiary[];
-}
-
 const SubsidiaryList: React.FC<SubsidiaryListProps> = ({ subsidiaries }) => {
-  const [selectedSubsidiary, setSelectedSubsidiary] = useState<Subsidiary | null>(null);
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState<SubsidiaryProps | null>(null);
 
   const closePopup = useCallback(() => {
     setSelectedSubsidiary(null);
@@ -40,7 +31,7 @@ const SubsidiaryList: React.FC<SubsidiaryListProps> = ({ subsidiaries }) => {
         ) : (
           subsidiaries.map((subsidiary) => (
             <div
-              key={subsidiary.id}
+              key={subsidiary._id}
               className="p-4 border rounded shadow-sm cursor-pointer"
               onClick={() => setSelectedSubsidiary(subsidiary)}
             >

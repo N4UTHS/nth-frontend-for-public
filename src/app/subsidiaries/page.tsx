@@ -3,15 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import SubsidiaryList from '@/components/NormalUserPage/Subsidiaries/List';
 import LoadingSpinner from '@/components/UI/Loading';
-
-interface Subsidiary {
-  id: string;
-  name: string;
-  explain: string;
-}
+import { SubsidiaryProps } from '@/types/Props';
 
 const SubsidiaryPage: React.FC = () => {
-  const [subsidiaries, setSubsidiaries] = useState<Subsidiary[]>([]);
+  const [subsidiaries, setSubsidiaries] = useState<SubsidiaryProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +24,7 @@ const SubsidiaryPage: React.FC = () => {
           throw new Error('Failed to fetch subsidiaries');
         }
         
-        const data: Subsidiary[] = await res.json();
+        const data: SubsidiaryProps[] = await res.json();
         setSubsidiaries(data);
       } catch (error) {
         console.error('Error fetching subsidiaries:', error);

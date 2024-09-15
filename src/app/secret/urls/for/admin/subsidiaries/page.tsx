@@ -3,17 +3,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import LoadingSpinner from '@/components/UI/Loading';
 import { useRouter } from 'next/navigation';
-
-interface Subsidiary {
-  _id: string;
-  name: string;
-  explain: string;
-}
+import { SubsidiaryProps } from '@/types/Props';
 
 const SubsidiaryManagement: React.FC = () => {
   const router = useRouter();
-  const [subsidiaries, setSubsidiaries] = useState<Subsidiary[]>([]);
-  const [selectedSubsidiary, setSelectedSubsidiary] = useState<Subsidiary | null>(null);
+  const [subsidiaries, setSubsidiaries] = useState<SubsidiaryProps[]>([]);
+  const [selectedSubsidiary, setSelectedSubsidiary] = useState<SubsidiaryProps  | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAdding, setIsAdding] = useState<boolean>(false);
 
@@ -123,7 +118,7 @@ const SubsidiaryManagement: React.FC = () => {
     }
   };
 
-  const handleCreate = async (newSubsidiary: Omit<Subsidiary, 'id'>) => {
+  const handleCreate = async (newSubsidiary: Omit<SubsidiaryProps, 'id'>) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
         method: 'POST',
