@@ -1,46 +1,12 @@
-'use client'
-
-import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import LoadingSpinner from '@/components/UI/Loading';
-import { AnnouncementProps } from '@/types/Props';
+import { useAnnouncement } from '@/hooks/userPage/announcement/useAnnouncement';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
-async function getAnnouncement(id: string): Promise<AnnouncementProps | null> {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch announcement');
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error('Error fetching announcement:', error);
-    return null;
-  }
-}
-
-const AnnouncementDetailPage: React.FC<{ params: { id: string } }> = ({ params }) => {
-  const [announcement, setAnnouncement] = useState<AnnouncementProps | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchAnnouncement() {
-      const data = await getAnnouncement(params.id);
-      setAnnouncement(data);
-      setLoading(false);
-    }
-    fetchAnnouncement();
-  }, [params.id]);
+const AnnouncementDetail: React.FC<{ id: string }> = ({ id }) => {
+  const { announcement, loading } = useAnnouncement(id);
 
   const handleFileDownload = () => {
     if (announcement?.file && announcement.file_name && announcement.fileContentType) {
@@ -121,4 +87,4 @@ const AnnouncementDetailPage: React.FC<{ params: { id: string } }> = ({ params }
   );
 };
 
-export default AnnouncementDetailPage;
+export default AnnouncementDetail;
