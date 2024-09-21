@@ -21,4 +21,116 @@ https://youtu.be/AeV2KVPsxs4?si=C4K39odwoKgtgsog
 - ReactQuill으로 공지사항 에디터 구현
 - NAVER Cloud Platform Web Dynamic Map API로 오시는 길 구현
 
-## 프로젝트 구조 및 설명
+## 프로젝트 구조
+```
+nh-frontend-for-public
+├─ package-lock.json
+├─ package.json
+├─ Dockerfile
+├─ middleware.ts
+├─ src
+│  ├─ apis
+│  │  ├─ adminPage
+│  │  │  ├─ announcement
+│  │  │  │  ├─ create
+│  │  │  │  │  └─ fetchForAnnouncement.ts
+│  │  │  │  ├─ fetchForAdminAnnouncmentList.ts
+│  │  │  │  └─ update
+│  │  │  ├─ login
+│  │  │  │  └─ fetchForAdminLogin.ts
+│  │  │  ├─ main-image
+│  │  │  │  └─ fetchForMainImages.ts
+│  │  │  └─ subsidiaries
+│  │  │     └─ fetchForSubsidiaries.ts
+│  │  └─ userPage
+│  │     ├─ announcement
+│  │     │  ├─ fetchForAllAnnouncements.ts
+│  │     │  └─ fetchForSingleAnnouncement.ts
+│  │     └─ subsidiaries
+│  │        └─ fetchForSubsidiaries.ts
+│  ├─ app
+│  │  ├─ announcement
+│  │  │  ├─ [id]
+│  │  │  │  └─ page.tsx
+│  │  │  └─ page.tsx
+│  │  ├─ favicon.ico
+│  │  ├─ fonts
+│  │  │  ├─ GeistMonoVF.woff
+│  │  │  └─ GeistVF.woff
+│  │  ├─ globals.css
+│  │  ├─ layout.tsx
+│  │  ├─ page.tsx
+│  │  ├─ secret
+│  │  │  └─ urls
+│  │  │     └─ for
+│  │  │        └─ admin
+│  │  │           ├─ announcement
+│  │  │           │  ├─ create
+│  │  │           │  │  └─ page.tsx
+│  │  │           │  ├─ page.tsx
+│  │  │           │  └─ update
+│  │  │           │     └─ [id]
+│  │  │           │        └─ page.tsx
+│  │  │           ├─ home-image
+│  │  │           │  └─ page.tsx
+│  │  │           ├─ login
+│  │  │           │  └─ page.tsx
+│  │  │           └─ subsidiaries
+│  │  │              └─ page.tsx
+│  │  ├─ subsidiaries
+│  │  │  └─ page.tsx
+│  │  └─ waytocome
+│  │     └─ page.tsx
+│  ├─ components
+│  │  ├─ Admin
+│  │  │  ├─ AdminNavigation.tsx
+│  │  │  └─ Announcement
+│  │  │     └─ List.tsx
+│  │  ├─ NormalUserPage
+│  │  │  ├─ Announcement
+│  │  │  │  └─ List.tsx
+│  │  │  ├─ Subsidiaries
+│  │  │  │  └─ List.tsx
+│  │  │  └─ WayToCome
+│  │  │     ├─ Map.tsx
+│  │  │     └─ TransportationInfo.tsx
+│  │  ├─ UI
+│  │  │  └─ Loading.tsx
+│  │  └─ layout
+│  │     ├─ ClientWrapper.tsx
+│  │     ├─ Footer.tsx
+│  │     └─ Navigation.tsx
+│  ├─ hooks
+│  │  ├─ adminPage
+│  │  │  ├─ announcement
+│  │  │  │  ├─ create
+│  │  │  │  │  └─ useAnnouncment.ts
+│  │  │  │  ├─ update
+│  │  │  │  └─ useAdminAnnouncementList.ts
+│  │  │  ├─ login
+│  │  │  │  └─ useAdminLogin.ts
+│  │  │  ├─ main-image
+│  │  │  │  └─ useMainImageManage.ts
+│  │  │  └─ subsidiaries
+│  │  │     └─ useAdminSubsidiaries.ts
+│  │  └─ userPage
+│  │     ├─ announcement
+│  │     │  ├─ useAnnouncement.ts
+│  │     │  └─ useAnnouncements.ts
+│  │     └─ subsidiaries
+│  │        └─ useSubsidiaries.ts
+│  ├─ public
+│  │  ├─ f_logo1.png
+│  │  ├─ f_logo2.png
+│  │  ├─ favicon.ico
+│  │  ├─ logo.png
+│  │  ├─ logo_title.png
+│  │  ├─ next.svg
+│  │  ├─ test.png
+│  │  └─ vercel.svg
+│  ├─ types
+│  │  └─ Props.ts
+│  └─ utils
+├─ tailwind.config.ts
+└─ tsconfig.json
+```
