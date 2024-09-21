@@ -39,18 +39,18 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
           },
           credentials: 'include'
         });
-  
+
         if (!response.ok) {
           router.push('/');
           throw new Error('Network response was not ok');
         }
-  
+
         const data = await response.json();
         setTitle(data.title);
         setMainText(data.main_text);
         setCategory(data.category ? Object.keys(categoryMap).find(key => categoryMap[key as keyof typeof categoryMap] === data.category) || '' : '');
         setCurrentFileName(data.file_name || '');
-  
+
         if (data.file) {
           setExistingFile({
             name: data.file_name,
@@ -58,7 +58,7 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
             contentType: data.fileContentType
           });
         }
-        
+
       } catch (error) {
         console.error('Error fetching announcement data:', error);
         alert('공지사항 정보를 불러오는 데 실패했습니다.');
@@ -67,7 +67,7 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
         setIsLoading(false);
       }
     };
-  
+
     fetchAnnouncementData();
   }, [params.id, router, categoryMap]);
 
@@ -76,31 +76,31 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (isSubmitting) return;
-  
+
     if (!title || !main_text) {
       alert('제목과 본문을 입력해 주세요.');
       return;
     }
-  
+
     const confirmEdit = window.confirm('공지사항을 수정하시겠습니까?');
     if (!confirmEdit) return;
-  
+
     setIsSubmitting(true);
-  
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('main_text', main_text);
     if (category) formData.append('category', categoryMap[category as CategoryKey]);
-  
+
     if (file) {
       formData.append('file', file);
       formData.append('file_name', file.name);
     } else if (existingFile) {
       formData.append('existing_file', JSON.stringify(existingFile));
     }
-  
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}/${params.id}`, {
         method: 'POST',
@@ -110,11 +110,11 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
         },
         credentials: 'include'
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json();
       console.log('응답 데이터:', data);
       alert('성공적으로 수정되었습니다.');
@@ -152,7 +152,7 @@ const EditAnnouncementPage: React.FC<{ params: { id: string } }> = ({ params }) 
     toolbar: [
       [{ 'header': [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
       ['link', 'image'],
       ['clean']
     ],
