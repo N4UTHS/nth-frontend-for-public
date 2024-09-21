@@ -26,10 +26,10 @@ https://youtu.be/AeV2KVPsxs4?si=C4K39odwoKgtgsog
 nh-frontend-for-public
 ├─ package-lock.json
 ├─ package.json
-├─ Dockerfile
-├─ middleware.ts
+├─ Dockerfile ───────────────────────────────────── # Docker 이미지 설정 파일
+├─ middleware.ts ────────────────────────────────── # 미들웨어
 ├─ src
-│  ├─ apis
+│  ├─ apis ──────────────────────────────────────── # API 요청 관리
 │  │  ├─ adminPage
 │  │  │  ├─ announcement
 │  │  │  │  ├─ create
@@ -48,7 +48,7 @@ nh-frontend-for-public
 │  │     │  └─ fetchForSingleAnnouncement.ts
 │  │     └─ subsidiaries
 │  │        └─ fetchForSubsidiaries.ts
-│  ├─ app
+│  ├─ app ────────────────────────────────────────── # 애플리케이션 
 │  │  ├─ announcement
 │  │  │  ├─ [id]
 │  │  │  │  └─ page.tsx
@@ -81,7 +81,7 @@ nh-frontend-for-public
 │  │  │  └─ page.tsx
 │  │  └─ waytocome
 │  │     └─ page.tsx
-│  ├─ components
+│  ├─ components ─────────────────────────────────── # 컴포넌트
 │  │  ├─ Admin
 │  │  │  ├─ AdminNavigation.tsx
 │  │  │  └─ Announcement
@@ -100,7 +100,7 @@ nh-frontend-for-public
 │  │     ├─ ClientWrapper.tsx
 │  │     ├─ Footer.tsx
 │  │     └─ Navigation.tsx
-│  ├─ hooks
+│  ├─ hooks ──────────────────────────────────────── # 상태 관리
 │  │  ├─ adminPage
 │  │  │  ├─ announcement
 │  │  │  │  ├─ create
@@ -128,7 +128,7 @@ nh-frontend-for-public
 │  │  ├─ next.svg
 │  │  ├─ test.png
 │  │  └─ vercel.svg
-│  ├─ types
+│  ├─ types ──────────────────────────────────────── # 타입 관리
 │  │  └─ Props.ts
 │  └─ utils
 ├─ tailwind.config.ts
