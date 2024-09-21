@@ -1,43 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import AdminAnnouncementList from '@/components/Admin/Announcement/List';
 import LoadingSpinner from '@/components/UI/Loading';
-import { useRouter } from 'next/navigation';
+import useAdminAnnouncements from '@/hooks/adminPage/announcement/useAdminAnnouncementList';
 
 const AdminAnnouncementPage: React.FC = () => {
-  const router = useRouter();
-  const [announcements, setAnnouncements] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchAnnouncements() {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          router.push('/');
-          throw new Error('Failed to fetch announcements');
-        }
-
-        const data = await response.json();
-        setAnnouncements(data);
-      } catch (error) {
-        console.error('Error fetching announcements:', error);
-        setAnnouncements([]);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchAnnouncements();
-  }, [router]);
+  const { announcements, isLoading } = useAdminAnnouncements();
 
   return (
     <div className="container mx-auto p-4 min-h-screen flex flex-col justify-start pt-[2cm] md:pt-[3cm]">
