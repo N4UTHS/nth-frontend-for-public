@@ -1,97 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
+import useAdminLogin from '@/hooks/adminPage/login/useAdminLogin';
 
 const LoginForm: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [authCode, setAuthCode] = useState('');
-    const [error, setError] = useState('');
-    const [isFirstAuthPassed, setIsFirstAuthPassed] = useState(false);
-    const [adminData, setAdminData] = useState(null);
-    const router = useRouter();
-
-    useEffect(() => {
-        const fetchAdminData = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include'
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.message === '있음') {
-                        router.push(`${process.env.NEXT_PUBLIC_ADMIN_URL}/announcement`);
-                    }
-                } else {
-                    console.error('서버 응답이 올바르지 않습니다.');
-                    alert('서버 응답이 올바르지 않습니다.');
-                }
-            } catch (error) {
-                console.error('Error fetching admin data:', error);
-                alert(error);
-            }
-        };
-
-        fetchAdminData();
-    }, [router]);
-
-    const handleFirstAuth = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                setIsFirstAuthPassed(true);
-            } else {
-                const data = await response.json();
-                setError(data.message || '접근 권한이 없습니다.');
-            }
-        } catch (err) {
-            alert(err);
-            router.push('/');
-        }
-    };
-
-    const handleFinalAuth = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ authCode }),
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                alert("관리자 로그인 성공");
-                router.push(`${process.env.NEXT_PUBLIC_ADMIN_URL}/announcement`);
-            } else {
-                const data = await response.json();
-                setError(data.message || '인증에 실패했습니다.');
-            }
-        } catch (err) {
-            setError('서버와의 통신 중 오류가 발생했습니다.');
-        }
-    };
+    const {
+        username,
+        password,
+        authCode,
+        error,
+        isFirstAuthPassed,
+        setUsername,
+        setPassword,
+        setAuthCode,
+        handleFirstAuth,
+        handleFinalAuth,
+    } = useAdminLogin();
 
     return (
         <div className="min-h-screen bg-white flex flex-col justify-start items-center px-4">
