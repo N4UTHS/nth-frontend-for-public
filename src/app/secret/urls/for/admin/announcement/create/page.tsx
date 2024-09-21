@@ -1,23 +1,24 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/UI/Loading';
 import dynamic from 'next/dynamic';
+import useAdminData from '@/hooks/adminPage/announcement/create/useAnnouncment';
+import { submitAnnouncement } from '@/apis/adminPage/announcement/create/fetchForAnnouncement';
+import { useRouter } from 'next/navigation';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
 const AnnouncementPage: React.FC = () => {
   const router = useRouter();
+  const { adminData, isLoading } = useAdminData();
   const [title, setTitle] = useState('');
   const [main_text, setMainText] = useState('');
   const [category, setCategory] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [currentFileName, setCurrentFileName] = useState('');
-  const [adminData, setAdminData] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const categoryMap: { [key: string]: string } = {
     '사업': 'business',
@@ -27,86 +28,48 @@ const AnnouncementPage: React.FC = () => {
 
   const categories = ['사업', '소식', '채용'];
 
-  useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          credentials: 'include'
-        });
-
-        if (!response.ok) {
-          router.push('/');
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        setAdminData(data);
-      } catch (error) {
-        console.error('Error fetching admin data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAdminData();
-  }, [router]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (isSubmitting) return;
-
+  
     if (!title || !main_text) {
       alert('제목과 본문을 입력해주세요.');
       return;
     }
-
+  
     const confirmSubmit = window.confirm('공지사항을 작성하시겠습니까?');
     if (!confirmSubmit) return;
-
+  
     setIsSubmitting(true);
-
+  
     const formData = new FormData();
     formData.append('title', title);
     formData.append('main_text', main_text);
-    if (category) formData.append('category', categoryMap[category]);
+    if (category && categoryMap[category]) {
+      formData.append('category', categoryMap[category]);
+    }
     if (file) {
       formData.append('file', file);
       formData.append('file_name', file.name);
     }
-
+  
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${process.env.NEXT_PUBLIC_ADMIN_URL}`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        credentials: 'include'
-      });
-
-      if (!response.ok) {
-        router.push('/');
-        throw new Error('Network response was not ok');
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('토큰이 유효하지 않습니다. 다시 로그인 해주세요.');
+        return;
       }
-
-      const data = await response.json();
-      console.log('응답 데이터:', data);
+      await submitAnnouncement(formData, token);
       alert('성공적으로 업로드되었습니다.');
       resetForm();
-      router.push(`${process.env.NEXT_PUBLIC_ADMIN_URL}/announcement`);
     } catch (error) {
       console.error('업로드 오류:', error);
       alert('업로드 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }
-  };
+  };  
 
   const resetForm = () => {
     setTitle('');
@@ -139,7 +102,7 @@ const AnnouncementPage: React.FC = () => {
     toolbar: [
       [{ 'header': [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
       ['link', 'image'],
       ['clean']
     ],
@@ -201,7 +164,6 @@ const AnnouncementPage: React.FC = () => {
             <div className="border-t border-gray-200 pt-4 mt-4 flex justify-end gap-4">
               <button
                 type="submit"
-                onClick={handleSubmit}
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isSubmitting}
               >

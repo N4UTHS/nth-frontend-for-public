@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import AnnouncementList from '@/components/NormalUserPage/Announcement/List';
 import LoadingSpinner from '@/components/UI/Loading';
 import { useAnnouncements } from '@/hooks/userPage/announcement/useAnnouncements';
