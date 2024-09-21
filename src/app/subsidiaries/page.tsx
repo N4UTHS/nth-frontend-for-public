@@ -1,41 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SubsidiaryList from '@/components/NormalUserPage/Subsidiaries/List';
 import LoadingSpinner from '@/components/UI/Loading';
-import { SubsidiaryProps } from '@/types/Props';
+import { useSubsidiaries } from '@/hooks/userPage/subsidiaries/useSubsidiaries';
 
 const SubsidiaryPage: React.FC = () => {
-  const [subsidiaries, setSubsidiaries] = useState<SubsidiaryProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchSubsidiaries() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, { 
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-        
-        if (!res.ok) {
-          throw new Error('Failed to fetch subsidiaries');
-        }
-        
-        const data: SubsidiaryProps[] = await res.json();
-        setSubsidiaries(data);
-      } catch (error) {
-        console.error('Error fetching subsidiaries:', error);
-        setSubsidiaries([]);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchSubsidiaries();
-  }, []);
+  const { subsidiaries, isLoading } = useSubsidiaries();
 
   return (
     <div className="container mx-auto p-4 min-h-screen flex flex-col justify-start pt-[2cm] md:pt-[3cm]">
