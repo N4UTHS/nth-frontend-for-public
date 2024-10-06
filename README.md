@@ -16,7 +16,7 @@
 https://youtu.be/AeV2KVPsxs4?si=C4K39odwoKgtgsog
 ```
 ## 프로젝트 구조도
-![프로젝트 구조](https://github.com/user-attachments/assets/95865e30-d121-47ac-bf2c-1062c58ffb7b)
+![프로젝트 구조](https://github.com/user-attachments/assets/f6a6d6ce-03df-47a0-98f9-3982fabbe6d3)
 
 ## 핵심 기능
 - 드래그 앤 드롭으로 메인 화면에 표시할 이미지 순서 지정
