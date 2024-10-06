@@ -15,13 +15,15 @@
 ```
 https://youtu.be/AeV2KVPsxs4?si=C4K39odwoKgtgsog
 ```
+## 프로젝트 구조도
+![프로젝트 구조](https://github.com/user-attachments/assets/95865e30-d121-47ac-bf2c-1062c58ffb7b)
 
 ## 핵심 기능
 - 드래그 앤 드롭으로 메인 화면에 표시할 이미지 순서 지정
 - ReactQuill으로 공지사항 에디터 구현
 - NAVER Cloud Platform Web Dynamic Map API로 오시는 길 구현
 
-## 프로젝트 구조
+## 프로젝트 구조 및 설명
 ```
 nh-frontend-for-public
 ├─ package-lock.json
