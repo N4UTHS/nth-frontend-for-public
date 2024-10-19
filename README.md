@@ -25,7 +25,7 @@ https://youtu.be/AeV2KVPsxs4?si=C4K39odwoKgtgsog
 
 ## 프로젝트 구조 및 설명
 ```
-nh-frontend-for-public
+NTH-Frontend-for-public
 ├─ package-lock.json
 ├─ package.json
 ├─ Dockerfile ───────────────────────────────────── # Docker 이미지 설정 파일
